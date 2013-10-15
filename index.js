@@ -1,8 +1,8 @@
 var http = require('http'),
 	express = require('express');
 
-var server = http.createServer(),
-	app = express(server);
+var app = express(server),
+	server = http.createServer(app);
 
 app.configure(function() {
 	app.set('version', require('./package').version);
