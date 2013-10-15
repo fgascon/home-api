@@ -2,6 +2,8 @@ var express = require('express');
 
 var app = express();
 
+var SERVER_PORT = 8080;
+
 app.configure(function() {
 	app.set('version', require('./package').version);
 });
@@ -14,6 +16,6 @@ app.get('/', function(req, res) {
 	});
 });
 
-server.listen(8080, function() {
-	console.log("Home API (v %s) listening on port %d", app.get('version'), server.address().port);
+app.listen(SERVER_PORT, function() {
+	console.log("Home API (v %s) listening on port %d", app.get('version'), SERVER_PORT);
 });
