@@ -15,9 +15,9 @@
     "automation",
     "api"
   ],
-  "author": "Fr�d�ric Gascon",
+  "author": "Frédéric Gascon",
   "license": "MIT",
   "dependencies": {
-    "express": "~3.4.0"
+    "express": "3.4.0"
   }
 }
