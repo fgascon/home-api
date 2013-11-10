@@ -3,3 +3,5 @@ var server = require('./lib/server'),
 
 routesLoader(server);
 server.start();
+
+require('./lib/logic');

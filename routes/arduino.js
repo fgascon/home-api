@@ -1,4 +1,5 @@
-var arduino = require('../lib/arduino');
+var arduino = require('../lib/arduino'),
+	logic = require('../lib/logic');
 
 module.exports = function(app){
 	
@@ -18,4 +19,23 @@ module.exports = function(app){
 			});
 		}
 	});
+	
+	app.get('/arduino/:pin', function(req, res){
+		var params = req.params;
+		logic.getState(params.pin, function(err, state){
+			if(err){
+				res.json({
+					success: false,
+					error: err
+				});
+			}else{
+				res.json({
+					success: true,
+					pin: params.pin,
+					state: state
+				});
+			}
+		});
+	});
+	
 };
