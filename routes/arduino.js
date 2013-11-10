@@ -2,35 +2,20 @@ var arduino = require('../lib/arduino');
 
 module.exports = function(app){
 	
-	/*app.get('/arduino/:pin', function(req, res){
-		arduino.setPin(req.params.pin, req.body.state, function(err, value){
-			if(err){
-				res.json({
-					success: false,
-					error: err
-				});
-			}else{
-				res.json({
-					success: true,
-					value: value
-				});
-			}
-		});
+	app.get('/arduino/:pin/:command', function(req, res){
+		var params = req.params;
+		if(params.command === 'on' || params.command === 'off'){
+			arduino.emit(params.pin + ':' + params.command);
+			res.json({
+				success: true,
+				pin: params.pin,
+				command: params.command
+			});
+		}else{
+			res.json({
+				success: false,
+				error: "invalid command: " + params.command
+			});
+		}
 	});
-	
-	app.post('/arduino/:pin', function(req, res){
-		arduino.setPin(req.params.pin, req.body.state, function(err, value){
-			if(err){
-				res.json({
-					success: false,
-					error: err
-				});
-			}else{
-				res.json({
-					success: true,
-					value: value
-				});
-			}
-		});
-	});*/
 };
