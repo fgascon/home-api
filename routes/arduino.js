@@ -3,15 +3,11 @@ var arduino = require('../lib/arduino'),
 
 module.exports = function(app){
 	
-	app.get('/arduino/:pin/:command', function(req, res){
+	app.get('/lights/:command', function(req, res){
 		var params = req.params;
 		if(params.command === 'on' || params.command === 'off'){
-			arduino.emit(params.pin + ':' + params.command);
-			res.json({
-				success: true,
-				pin: params.pin,
-				command: params.command
-			});
+			arduino.emit('lights:' + params.command);
+			returnLightsState(res);
 		}else{
 			res.json({
 				success: false,
@@ -20,9 +16,12 @@ module.exports = function(app){
 		}
 	});
 	
-	app.get('/arduino/:pin', function(req, res){
-		var params = req.params;
-		logic.getState(params.pin, function(err, state){
+	app.get('/lights', function(req, res){
+		returnLightsState(res);
+	});
+	
+	function returnLightsState(res){
+		logic.getLightsState(function(err, state){
 			if(err){
 				res.json({
 					success: false,
@@ -31,11 +30,10 @@ module.exports = function(app){
 			}else{
 				res.json({
 					success: true,
-					pin: params.pin,
 					state: state
 				});
 			}
 		});
-	});
+	}
 	
 };
